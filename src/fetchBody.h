@@ -1,4 +1,4 @@
-#ifndef FETCHBODY_H_   /* Include guard */
+#ifndef FETCHBODY_H_ 
 #define FETCHBODY_H_
 
 void fetchBody(char url[256]);
