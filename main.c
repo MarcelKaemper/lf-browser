@@ -4,18 +4,26 @@
 #include <ncurses.h>
 #include "src/fetchBody.h"
 
+// void write(WINDOW *win, int xpos, int ypos, char ch){
+//     mvwaddch(win, ypos, xpos+1, ch);
+// }
+
 int main(void) {
     int h,w;
     char url[250];
 
     initscr();
     getmaxyx(stdscr, h, w);
+    
     WINDOW *win = newwin(h,w,0,0);
+
+    noecho();
+    keypad(stdscr, TRUE);
 
     // Draw box around the window
     for(int i = 0; i<h; i++){
         for(int j = 0; j<w; j++){
-            if((i==0) || (i==h-1)){
+            if((i==0) || (i==h-1) || (i==h-3)){
                 mvwaddch(win,i,j,ACS_BLOCK);
             }else{
                 mvwaddch(win, i, 0, ACS_BLOCK);
@@ -27,14 +35,28 @@ int main(void) {
     refresh();
     wrefresh(win);
 
-    char c = getch();
+    int cursorPos = 1;
+
+    for(;;) {
+        int c = getch();
+        if(c == 10){
+            break;
+        }
+        url[cursorPos-1] = c;
+        cursorPos += 1;
+        mvwaddch(win, h-2, cursorPos, c);
+        wrefresh(win);
+        // write(win, cursorPos, h-2, c);
+        // if(c == '1'){
+        //     strcpy(url,"http://marcelkaemper.deinsh.eu");
+        // }
+    }
 
     endwin();
 
-    if(c == '1'){
-        strcpy(url,"http://marcelkaemper.deinsh.eu");
-    }
-    
+    FILE *fp = fopen("out", "w");
+    fprintf(fp, "%s%s", url, "\n");
+
     fetchBody(url);
 
     return 0;
