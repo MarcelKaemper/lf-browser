@@ -3,14 +3,13 @@
 #include <string.h>
 #include <ncurses.h>
 #include "src/fetchBody.h"
-
-// void write(WINDOW *win, int xpos, int ypos, char ch){
-//     mvwaddch(win, ypos, xpos+1, ch);
-// }
+#include "src/getTagContent.h"
 
 int main(void) {
     int h,w;
     char url[250];
+
+    getTagContent();
 
     initscr();
     getmaxyx(stdscr, h, w);
@@ -36,6 +35,7 @@ int main(void) {
     wrefresh(win);
 
     int cursorPos = 0;
+    wmove(win, h-2, cursorPos+2);
 
     for(;;) {
         int c = getch();
