@@ -35,21 +35,24 @@ int main(void) {
     refresh();
     wrefresh(win);
 
-    int cursorPos = 1;
+    int cursorPos = 0;
 
     for(;;) {
         int c = getch();
         if(c == 10){
             break;
         }
-        url[cursorPos-1] = c;
-        cursorPos += 1;
-        mvwaddch(win, h-2, cursorPos, c);
+        else if(c == KEY_BACKSPACE){
+            url[cursorPos] = '\0';
+            mvwdelch(win, h-2, cursorPos+1);
+            cursorPos -= 1;
+        }
+        else{
+            url[cursorPos] = c;
+            mvwaddch(win, h-2, cursorPos+2, url[cursorPos]);
+            cursorPos += 1;
+        }
         wrefresh(win);
-        // write(win, cursorPos, h-2, c);
-        // if(c == '1'){
-        //     strcpy(url,"http://marcelkaemper.deinsh.eu");
-        // }
     }
 
     endwin();
