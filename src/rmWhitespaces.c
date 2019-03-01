@@ -4,6 +4,7 @@
 
 void rmWhitespaces() {
 	FILE *fp;
+	FILE *fpp;
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
@@ -20,7 +21,13 @@ void rmWhitespaces() {
 				bufferPos+=1;
 			}	
 		}
+		linebuffer[bufferPos] = '\n';
+		fpp = fopen("test_new", "a");
+		fprintf(fpp, linebuffer);
+		fclose(fpp);
+		for(int i = 0; i<sizeof(linebuffer);i++){
+			linebuffer[i] = ' ';
+		}
 	}
-	printf("%s\n", linebuffer);
 	fclose(fp);
 }
