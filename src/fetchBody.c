@@ -13,4 +13,5 @@ void fetchBody(char url[256]) {
     result = curl_easy_perform(curl);
 
     curl_easy_cleanup(curl);
+    fclose(f);
 }
