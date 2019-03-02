@@ -4,6 +4,6 @@ I made it in C, using the libraries curl(to get the html body) and curses(To pro
 The name will surely change later.
 
 ## Current status
-The only thing this program can do, is downloading HTML code from a given
+The only thing this program can do is downloading HTML code from a given
 URL and removing the whitespaces in front of every line.
 
